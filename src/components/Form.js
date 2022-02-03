@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Form() {
+  const [inputBebida, setInputBebida] = useState("");
   return (
     <div className="container mt-4">
       <div className="row">
@@ -15,6 +16,8 @@ function Form() {
                   type="text"
                   className="form-control"
                   placeholder="Buscar bebida"
+                  value={inputBebida}
+                  onChange={(e) => setInputBebida(e.target.value)}
                 />
               </div>
               <div className="col-md-4">

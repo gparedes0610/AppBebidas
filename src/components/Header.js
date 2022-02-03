@@ -1,5 +1,12 @@
 import React from "react";
-import { Navbar, Container, Offcanvas, Nav, Table } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Offcanvas,
+  Nav,
+  Table,
+  Card,
+} from "react-bootstrap";
 function Header({ carrito }) {
   return (
     <Navbar bg="light" expand={false}>
@@ -19,30 +26,37 @@ function Header({ carrito }) {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Imagen</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {carrito.map((bebida, i) => (
-                    <tr key={i}>
+              {carrito.length > 0 ? (
+                <table className="table">
+                  <thead>
+                    <td>Nombre</td>
+                    <td>P.Unitario</td>
+                    <td>Cantidad</td>
+                    <td>Sub.Total</td>
+                  </thead>
+                  <tbody>
+                    {carrito.map((bebida, i) => (
+                      <tr key={i}>
+                        <td>{bebida.strGlass}</td>
+                        <td>S/.{bebida.precio}</td>
+                        <td>{bebida.cantidad}</td>
+                        <td>S/.{bebida.precio * bebida.cantidad}</td>
+                      </tr>
+                    ))}
+                    <tr>
+                      <td colSpan="3">Total</td>
                       <td>
-                        <img
-                          src={bebida.strDrinkThumb}
-                          alt="img de bebida"
-                          className="img-fluid w-25"
-                        />
+                        S/.
+                        {carrito.reduce((total, bebida) => {
+                          return total + bebida.precio * bebida.cantidad;
+                        }, 0)}
                       </td>
-                      <td>{bebida.strGlass}</td>
-                      <td>{bebida.precio}</td>
                     </tr>
-                  ))}
-                </tbody>
-              </Table>
+                  </tbody>
+                </table>
+              ) : (
+                <div>Debe de agregar algun producto</div>
+              )}
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
